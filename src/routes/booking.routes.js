@@ -1,0 +1,13 @@
+import express from "express"
+import { create, getAll, getById, remove, update } from "../controllers/booking.controllers.js"
+import { USER_ROLE } from "../constants/enums.constants.js"
+
+const router=express.Router()
+
+router.get("/",authenticate([USER_ROLE.USER]),getAll)
+router.get("/:id",authenticate([USER_ROLE.USER]),getById)
+router.post("/",authenticate([USER_ROLE.USER]),create)
+router.put("/:id",authenticate([USER_ROLE.USER]),update)
+router.delete("/:id",authenticate([USER_ROLE.USER]),remove)
+
+export default router

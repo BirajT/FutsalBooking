@@ -1,0 +1,24 @@
+export const MONGO_CONFIG = {
+    URI: process.env.MONGODB_URI,
+    db_name:process.env.DB_NAME
+}
+
+export const cloudinary_config = {
+    cloud_name : process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET_KEY
+    
+}
+
+export const jwt_config = {
+    secret: process.env.JWT_SECRET,
+    expires_in : process.env.JWT_EXPIRES_IN
+}
+
+export const nodemailer_config = {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    service: process.env.SMT_SERVICE,
+    user:process.env.SMTP_USER,
+    pass:process.env.SMTP_PASS,
+}
