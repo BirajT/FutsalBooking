@@ -1,7 +1,6 @@
 import { USER_ROLE } from "../constants/enums.constants.js";
 import CustomError from "../middleware/error_handler.middleware.js";
 import User from "../models/user.model.js";
-import USER from "../models/user.model.js";
 import { asyncHandler } from "../utils/asynchandler.utils.js";
 import { comparePassword, hashPassword } from "../utils/bcrypt.utils.js";
 import { uploadToCloud } from "../utils/cloudinary.utils.js";
