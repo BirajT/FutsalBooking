@@ -1,15 +1,19 @@
 import express from "express"
+import cookieParser from "cookie-parser";
 import 'dotenv/config'
 import { connectDB } from "./config/db.config.js"
 import authRoutes from './routes/auth.routes.js'
 import futsalRoutes from './routes/futsal.routes.js'
 import bookingRoutes from "./routes/booking.routes.js"
 
-const PORT=process.env.PORT
+const PORT=process.env.PORT || 8080
 const app=express()
 
 connectDB()
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 app.use('/api/auth',authRoutes)
 app.use('/api/futsal',futsalRoutes)
 app.use('/api/booking',bookingRoutes)

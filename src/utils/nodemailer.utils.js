@@ -1,45 +1,27 @@
 import nodemailer from "nodemailer";
 import { nodemailer_config } from "../config/config.js";
 
-// create transport
+
 const transport = nodemailer.createTransport({
-  host: nodemailer_config.host,
-  port: nodemailer_config.port,
-  secure: parseInt(nodemailer_config.port) === 465 ? true : false,
-  service: nodemailer_config.service,
+  service: "gmail",
   auth: {
-    user: nodemailer_config.user,
-    pass: nodemailer_config.pass,
+     user: nodemailer_config.user,
+    pass: nodemailer_config.pass
   },
 });
 
-export const sendEmail = async ({
-  to,
-  subject,
-  html,
-  cc = null,
-  bcc = null,
-  attachments = null,
-}) => {
-  const options = {
-    to: to,
-    from: nodemailer_config.user,
-    subject: subject,
-    html: html,
-  };
-
-  if (cc) {
-    options["cc"] = cc;
-  }
-  if (bcc) {
-    options["bcc"] = bcc;
-  }
-  if (attachments) {
-    options["attachments"] = attachments;
-  }
+export const sendEmail = async ({ to, subject, html }) => {
   try {
-    await transport.sendMail(options);
+    await transport.sendMail({
+      from: `"Futsal App" <${nodemailer_config.user}>`,
+      to,
+      subject,
+      html,
+    });
+
+    console.log("Email sent successfully");
   } catch (error) {
-    console.log("email sending error");
+    console.error("Email sending error:", error.message);
   }
 };
+

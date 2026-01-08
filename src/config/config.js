@@ -16,9 +16,6 @@ export const jwt_config = {
 }
 
 export const nodemailer_config = {
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    service: process.env.SMT_SERVICE,
     user:process.env.SMTP_USER,
     pass:process.env.SMTP_PASS,
 }

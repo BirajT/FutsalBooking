@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { BOOKING_STATUS, PAYMENT_STATUS } from "../constants/enums.constants";
+import { BOOKING_STATUS, PAYMENT_STATUS } from "../constants/enums.constants.js";
 
 const bookingSchema=new mongoose.Schema({
     futsal:{

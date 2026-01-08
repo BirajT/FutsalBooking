@@ -10,7 +10,7 @@ const futsalSchema=new mongoose.Schema({
         required:[true,"address is required"]
     },
     contact:{
-        type:Number,
+        type:String,
         required:[true,"number is required"]
     },
     opening_time:{
