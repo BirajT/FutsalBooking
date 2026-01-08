@@ -7,7 +7,7 @@ import CustomError from "./error_handler.middleware.js";
 export const uploadFile = (dir = "/") => {
   const upload_path = "./uploads" + dir;
   const file_size = 5 * 1024 * 1024; // 5MB
-  const allowed_ext = ["png", "jpg", "jpeg", "pdf", "webp", "svg"];
+  const allowed_ext = ["png", "jpg", "jpeg", "pdf", "webp", "svg","JPG"];
 
   if (!fs.existsSync(upload_path)) {
     fs.mkdirSync(upload_path, { recursive: true });

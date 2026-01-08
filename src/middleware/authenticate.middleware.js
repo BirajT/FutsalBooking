@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import { verifyToken } from "../utils/jwt.utils.js";
 import CustomError from "./error_handler.middleware.js";
 
-export const authenticate = (roles) => {
+const authenticate = (roles) => {
   return async (req, res, next) => {
     try {
       // get cookies
@@ -62,3 +62,5 @@ export const authenticate = (roles) => {
     }
   };
 };
+
+export default authenticate

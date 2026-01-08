@@ -18,7 +18,7 @@ export const register = asyncHandler(async (req, res, next) => {
   }
 
   const hashedPass = await hashPassword(password);
-  const user = new USER({
+  const user = new User({
     first_name,
     last_name,
     email,
@@ -67,8 +67,9 @@ export const login = asyncHandler(async (req, res, next) => {
     throw new CustomError("password is required", 400);
   }
   //! check/get user by email
-  const user = await USER.findOne({ email });
+  const user = await User.findOne({ email });
   // throw error if user not found
+  
   if (!user) {
     throw new CustomError("Credentials does not match", 400);
   }
@@ -129,7 +130,8 @@ export const logout = asyncHandler(async (req, res) => {
 
 // change password
 export const changePassword=asyncHandler(async(req,res)=>{
-  const {email,oldpassword,newpassword}=req.body
+  const {oldpassword,newpassword}=req.body
+  const {email}=req.user.email
 
   if (!email) {
     throw new CustomError("Email is required", 400);
@@ -144,7 +146,7 @@ export const changePassword=asyncHandler(async(req,res)=>{
   const user=await User.findOne({email})
   if(!user)
   {
-    throw new CustomError("USer not found",404)
+    throw new CustomError("User not found",404)
   }
 
 const isMatch=await comparePassword(oldpassword,user.password)
@@ -152,7 +154,6 @@ const isMatch=await comparePassword(oldpassword,user.password)
   {
     throw new CustomError("Password does not match",400)
   }
-
 
     user.password=await hashPassword(newpassword)
     await user.save();

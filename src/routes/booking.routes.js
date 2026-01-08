@@ -1,5 +1,6 @@
 import express from "express"
 import { create, getAll, getById, remove, update } from "../controllers/booking.controllers.js"
+import authenticate from "../middleware/authenticate.middleware.js"
 import { USER_ROLE } from "../constants/enums.constants.js"
 
 const router=express.Router()
