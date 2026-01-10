@@ -35,7 +35,7 @@ export const getById=asyncHandler(async(req,res)=>{
 
 export const create=asyncHandler(async(req,res)=>{
     const {futsal,date,start_time,end_time,total_price}=req.body
-    const user = req.user._id;
+    const user = req.user;
 
        const conflict = await Booking.findOne({
         futsal,

@@ -11,4 +11,5 @@ router.post("/create",authenticate([USER_ROLE.USER]),create)
 router.put("/:id",authenticate([USER_ROLE.USER]),update)
 router.delete("/:id",authenticate([USER_ROLE.USER]),remove)
 
+
 export default router
