@@ -5,9 +5,9 @@ import { USER_ROLE } from "../constants/enums.constants.js"
 
 const router=express.Router()
 
-router.get("/",authenticate([USER_ROLE.USER]),getAll)
+router.get("/getAll",authenticate([USER_ROLE.USER]),getAll)
 router.get("/:id",authenticate([USER_ROLE.USER]),getById)
-router.post("/",authenticate([USER_ROLE.USER]),create)
+router.post("/create",authenticate([USER_ROLE.USER]),create)
 router.put("/:id",authenticate([USER_ROLE.USER]),update)
 router.delete("/:id",authenticate([USER_ROLE.USER]),remove)
 

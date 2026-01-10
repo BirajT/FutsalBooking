@@ -12,6 +12,7 @@ import { sendEmail } from "../utils/nodemailer.utils.js";
 export const register = asyncHandler(async (req, res, next) => {
   const { first_name, last_name, email, password, phone, gender } = req.body;
   const image = req.file;
+  
 
   if (!password) {
     throw new CustomError("Password is required", 400);

@@ -34,7 +34,8 @@ export const getById=asyncHandler(async(req,res)=>{
 })
 
 export const create=asyncHandler(async(req,res)=>{
-    const {futsal,user,date,start_time,end_time,total_price}=req.body
+    const {futsal,date,start_time,end_time,total_price}=req.body
+    const user = req.user._id;
 
        const conflict = await Booking.findOne({
         futsal,
