@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.config.js"
 import authRoutes from './routes/auth.routes.js'
 import futsalRoutes from './routes/futsal.routes.js'
 import bookingRoutes from "./routes/booking.routes.js"
+import { errorHandler } from "./middleware/error_handler.middleware.js"
 
 const PORT=process.env.PORT || 8080
 const app=express()
@@ -23,6 +24,9 @@ app.get('/',(req,res)=>{
         message:"server is up and running "
     });
 });
+
+// Add error handling middleware
+app.use(errorHandler);
 
 app.listen(PORT,()=>{
     console.log(`Database is connected at http://localhost ${PORT}`);

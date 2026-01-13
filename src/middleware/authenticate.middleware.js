@@ -2,59 +2,48 @@ import User from "../models/user.model.js";
 import { verifyToken } from "../utils/jwt.utils.js";
 import CustomError from "./error_handler.middleware.js";
 
-const authenticate = (roles) => {
+const authenticate = (roles = []) => {
   return async (req, res, next) => {
     try {
-      // get cookies
-      const cookies = req.cookies ?? {};
-      const token = cookies["access_token"];
+      let token;
 
+      // ✅ 1. Read token from cookie (browser)
+      if (req.cookies?.access_token) {
+        token = req.cookies.access_token;
+      }
+
+      // ✅ 2. Read token from Authorization header (Postman / Mobile)
+      if (!token && req.headers.authorization?.startsWith("Bearer ")) {
+        token = req.headers.authorization.split(" ")[1];
+      }
+
+      // ❌ No token
       if (!token) {
-        throw new CustomError("Unauthorized.Access denied", 401);
+        throw new CustomError("Unauthorized. Access denied", 401);
       }
-      console.log(token);
-      // validity
+
+      // ✅ 3. Verify token (handles expiry automatically)
       const payload = verifyToken(token);
-      console.log(payload);
-      if (!payload) {
-        throw new CustomError("Unauthorized.Access denied", 401);
-        
-      }
-      // payload?.exp
 
-      // expiry
-      if (payload?.exp && payload?.exp * 1000 < Date.now()) {
-        res.clearCookie("access_token", {
-          httpOnly: true,
-          sameSite: "none",
-          secure: process.env.NODE_ENV === "development" ? false : true,
-        });
-        throw new CustomError("Token Expired. Access denied", 401);
-      }
-
-      const user = await User.findOne({
-        _id: payload._id,
-        email: payload.email,
-      });
-
-      console.log(user);
+      // ✅ 4. Validate user
+      const user = await User.findById(payload._id);
       if (!user) {
-        throw new CustomError("Unauthorized.Access denied", 401);
+        throw new CustomError("Unauthorized. Access denied", 401);
       }
 
-      // roles
-
-      if (!roles.includes(user.role)) {
-        throw new CustomError("Forbidden.Access denied", 403);
+      // ✅ 5. Role check (safe)
+      if (roles.length && !roles.includes(user.role)) {
+        throw new CustomError("Forbidden. Access denied", 403);
       }
 
+      // ✅ 6. Attach user
       req.user = {
-        _id:user._id,
-        first_name:user.first_name,
-        last_name:user.last_name,
+        _id: user._id,
+        first_name: user.first_name,
+        last_name: user.last_name,
         email: user.email,
-        role:user.role
-      }
+        role: user.role,
+      };
 
       next();
     } catch (error) {
@@ -63,4 +52,4 @@ const authenticate = (roles) => {
   };
 };
 
-export default authenticate
+export default authenticate;

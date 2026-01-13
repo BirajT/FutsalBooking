@@ -132,10 +132,10 @@ export const logout = asyncHandler(async (req, res) => {
 // change password
 export const changePassword=asyncHandler(async(req,res)=>{
   const {oldpassword,newpassword}=req.body
-  const {email}=req.user.email
+  const email = req.user?.email // Fixed: added optional chaining
 
   if (!email) {
-    throw new CustomError("Email is required", 400);
+    throw new CustomError("User not authenticated", 401);
   }
   if (!oldpassword) {
     throw new CustomError("Old password is required", 400);
@@ -162,7 +162,7 @@ const isMatch=await comparePassword(oldpassword,user.password)
   await sendEmail({
     to:user.email,
     subject:"password changed sucessfully",
-    html:passwordChangedSuccessEmail()
+    html:"<h1>Password changed successfully</h1>" // Fixed: added proper HTML
   })
 
    res.status(200).json({

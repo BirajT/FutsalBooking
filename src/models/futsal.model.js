@@ -33,6 +33,5 @@ const futsalSchema=new mongoose.Schema({
     }
 },{timestamps:true})
 
-//creating futsal model
-const Futsal=mongoose.model('futsal',futsalSchema)
-export default Futsal
+const Futsal = mongoose.model("futsal", futsalSchema);
+export default Futsal;

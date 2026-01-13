@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
 import { BOOKING_STATUS, PAYMENT_STATUS } from "../constants/enums.constants.js";
+import Futsal from "../models/futsal.model.js"
+import User from "../models/user.model.js"
+
 
 const bookingSchema=new mongoose.Schema({
     futsal:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Futsal",
+        ref:"futsal",
         required:true
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref:"user",
         required:true,
     },
     date:{
